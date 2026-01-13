@@ -1,0 +1,44 @@
+<!-- generate template, focus only on displaying the data returned from the API 
+ (lists of times and temperatures) in a simple view -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">        
+    <title>Weather Analysis Results — Data Analyzer</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <h1 class="brand">Data Analyzer</h1>
+            <p class="tagline">Clear, fast summaries of your numbers</p>
+        </div>
+    </header>   
+    <main class="container">
+        <section class="card" role="region" aria-labelledby="weather-results-title">
+            <h2 id="weather-results-title">Weather Analysis Results</h2>
+            {% if times and temperatures %}
+            <div class="results-grid" role="region" aria-label="Weather summary">
+                <div class="result-card result-card-wide">
+                    <div class="label">Times</div>
+                    <div class="value">{{ times | join(', ') }}</div>
+                </div>
+                <div class="result-card result-card-wide">
+                    <div class="label">Temperatures</div>
+                    <div class="value">{{ temperatures | join(', ') }}</div>
+                </div>
+            </div>
+            <p class="back-link"><a href="/">Analyze another set</a></p>
+            {% else %}
+            <div role="alert">No weather data available.</div>
+            {% endif %}
+        </section>
+    </main>
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-left">Built for learning · Simple number analysis</div>
+        </div>
+    </footer>
+</body>
+</html>
