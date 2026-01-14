@@ -1,5 +1,4 @@
-<!-- generate template, focus only on displaying the data returned from the API 
- (lists of times and temperatures) in a simple view -->
+<!-- Weather analysis template: show summary stats from analyze_time_series() -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,30 +13,56 @@
             <h1 class="brand">Data Analyzer</h1>
             <p class="tagline">Clear, fast summaries of your numbers</p>
         </div>
-    </header>   
+    </header>
+
     <main class="container">
         <section class="card" role="region" aria-labelledby="weather-results-title">
             <h2 id="weather-results-title">Weather Analysis Results</h2>
-            {% if times and temperatures %}
+
+            {# Primary path: `analysis` is a dict from analyze_time_series() #}
             <div class="results-grid" role="region" aria-label="Weather summary">
-                <div class="result-card result-card-wide">
-                    <div class="label">Times</div>
-                    <div class="value">{{ times | join(', ') }}</div>
+                <div class="result-card">
+                    <div class="label">Min Temperature</div>
+                    <div class="value">{{ '%.2f' % analysis.min }}°</div>
+                    {% if analysis.min_time %}
+                    <div class="muted">at {{ analysis.min_time }}</div>
+                    {% endif %}
                 </div>
-                <div class="result-card result-card-wide">
-                    <div class="label">Temperatures</div>
-                    <div class="value">{{ temperatures | join(', ') }}</div>
+
+                <div class="result-card">
+                    <div class="label">Max Temperature</div>
+                    <div class="value">{{ '%.2f' % analysis.max }}°</div>
+                    {% if analysis.max_time %}
+                    <div class="muted">at {{ analysis.max_time }}</div>
+                    {% endif %}
                 </div>
+
+                <div class="result-card">
+                    <div class="label">Mean (Average)</div>
+                    <div class="value">{{ '%.2f' % analysis.average }}°</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="label">Median</div>
+                    <div class="value">{{ '%.2f' % analysis.median }}°</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="label">Std Dev</div>
+                    <div class="value">{{ '%.2f' % analysis.stddev }}°</div>
+                </div>
+
+   
             </div>
-            <p class="back-link"><a href="/">Analyze another set</a></p>
-            {% else %}
-            <div role="alert">No weather data available.</div>
-            {% endif %}
+
+  
         </section>
     </main>
+
     <footer class="site-footer">
         <div class="container footer-inner">
             <div class="footer-left">Built for learning · Simple number analysis</div>
+            <div class="footer-right">Need help? <a href="mailto:help@example.com">Contact</a></div>
         </div>
     </footer>
 </body>

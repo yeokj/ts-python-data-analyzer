@@ -50,7 +50,7 @@ def analyze_weather():
     
     times, temperatures = fetch_hourly_temperature(latitude, longitude)
     results = analyze_time_series(times, temperatures)
-    return jsonify(results)
+    return render_template("weather_analysis_results.html", analysis=results)
     
 
 if __name__ == '__main__':
