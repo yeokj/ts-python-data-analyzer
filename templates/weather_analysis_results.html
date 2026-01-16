@@ -19,6 +19,9 @@
         <section class="card" role="region" aria-labelledby="weather-results-title">
             <h2 id="weather-results-title">Weather Analysis Results</h2>
 
+            <div class="muted" style="margin-bottom: 16px;">
+                Latitude: {{ latitude }} | Longitude: {{ longitude }}
+            </div>
             {# Primary path: `analysis` is a dict from analyze_time_series() #}
             <div class="results-grid" role="region" aria-label="Weather summary">
                 <div class="result-card">
