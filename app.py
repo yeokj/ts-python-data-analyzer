@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, render_template, request
 from analyzer import analyze_numbers
 from external_api import fetch_hourly_temperature
-from weather_analysis import analyze_time_series
+from weather_analysis import analyze_time_series, WeatherAnalysisError
 
 app = Flask(__name__)
 
@@ -49,7 +49,11 @@ def analyze_weather():
             return render_template("weather_input.html", error=error_message)
         
         times, temperatures = fetch_hourly_temperature(latitude, longitude)
-        results = analyze_time_series(times, temperatures)
+        try:
+            results = analyze_time_series(times, temperatures)
+        except WeatherAnalysisError as e:
+            # Render input page with a clear error message for the user
+            return render_template("weather_input.html", error=str(e))
         return render_template("weather_analysis_results.html", analysis=results)
     error_message = "Please provide valid latitude and longitude."
     return render_template("weather_input.html", error=error_message)
