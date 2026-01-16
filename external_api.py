@@ -20,6 +20,10 @@ def fetch_hourly_temperature(latitude, longitude, timezone="auto"):
     times = hourly.get('time', [])
     temperatures = hourly.get('temperature_2m', [])
 
-    return times, temperatures
+    # Extract temperature unit
+    hourly_units = data.get('hourly_units', {})
+    temperature_unit = hourly_units.get('temperature_2m', '°C')  # Default to Celsius
+
+    return times, temperatures, temperature_unit
 
     # return response.json()

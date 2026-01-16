@@ -34,8 +34,8 @@ def test_weather():
     # Example coordinates for testing
     latitude = 40.7128
     longitude = -74.0060
-    times, temperatures = fetch_hourly_temperature(latitude, longitude)
-    return render_template("weather_analysis_results.html", times=times, temperatures=temperatures)
+    times, temperatures, unit = fetch_hourly_temperature(latitude, longitude)
+    return render_template("weather_analysis_results.html", times=times, temperatures=temperatures, temperature_unit=unit)
 
 @app.route('/analyze-weather', methods=['GET', 'POST'])
 def analyze_weather():
@@ -47,9 +47,11 @@ def analyze_weather():
             error_message = "Please provide valid latitude and longitude."
             return render_template("weather_input.html", error=error_message)
         
-        times, temperatures = fetch_hourly_temperature(latitude, longitude)
+        times, temperatures, unit = fetch_hourly_temperature(latitude, longitude)
         results = analyze_time_series(times, temperatures)
-        return render_template("weather_analysis_results.html", analysis=results, latitude=latitude, longitude=longitude)
+
+        return render_template("weather_analysis_results.html", analysis=results, temperature_unit=unit, latitude=latitude, longitude=longitude)
+
     error_message = "Please provide valid latitude and longitude."
     return render_template("weather_input.html", error=error_message)
 
