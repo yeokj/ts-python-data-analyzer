@@ -7,8 +7,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    a = "Thitima"
-    return render_template("index.html", name=a)
+    return render_template("index.html")
 
 @app.route('/analyze', methods=['GET', 'POST']) 
 def analyze():
